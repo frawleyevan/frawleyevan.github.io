@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Evan Frawley — Psychogeographic Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Leaflet (stable) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+  <style>
+    :root{
+      --ui-font: Arial, Helvetica, sans-serif;
+      --ui-border: #7fa1bb;
+      --ui-bg-top: linear-gradient(#cfe1f1, #9fc0d8);
+      --ui-tab: linear-gradient(#ffffff, #dedede);
+      --ui-tab-active: linear-gradient(#d7e6ff, #ffffff);
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #e7eef5;
+    }
+
+    .stage{
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      box-sizing: border-box;
+      font-family: var(--ui-font);
+    }
+
+    .gmaps-window{
+      width: min(1100px, 100%);
+      aspect-ratio: 16 / 10;
+      border: 2px solid var(--ui-border);
+      box-shadow: 0 12px 28px rgba(0,0,0,.18);
+      background: #dfeaf4;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Title bar */
+    .titlebar{
+      height: 26px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 8px;
+      background: var(--ui-bg-top);
+      border-bottom: 1px solid rgba(0,0,0,.25);
+      font-size: 12px;
+      font-weight: 700;
+      color: #0b2a3d;
+      user-select: none;
+    }
+
+    .dot{
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: radial-gradient(#ffffff, #c9c9c9);
+      border: 1px solid rgba(0,0,0,.25);
+    }
+
+    .winbtns{
+      margin-left: auto;
+      display: flex;
+      gap: 6px;
+    }
+
+    .winbtn{
+      width: 18px;
+      height: 14px;
+      border: 1px solid rgba(0,0,0,.35);
+      background: linear-gradient(#ffffff, #d9d9d9);
+      border-radius: 2px;
+    }
+
+    /* Navigation tabs */
+    .tabs{
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      z-index: 500;
+      display: flex;
+      gap: 6px;
+    }
+
+    .tabs a{
+      text-decoration: none;
+      color: #111;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border: 1px solid #7f7f7f;
+      background: var(--ui-tab);
+    }
+
+    .tabs a.active{
+      background: var(--ui-tab-active);
+      outline: 1px solid #3b6fb6;
+    }
+
+    /* Map area */
+    .map-wrap{
+      position: absolute;
+      inset: 26px 0 0 0;
+    }
+
+    #map{
+      height: 100%;
+      width: 100%;
+      filter: saturate(1.05) contrast(1.05);
+      transform: scale(1.01);
+    }
+
+    /* Subtle psychogeographic distortion */
+    .warp-overlay{
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      opacity: .18;
+      mix-blend-mode: soft-light;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,.35), transparent 42%),
+        radial-gradient(circle at 70% 60%, rgba(0,0,0,.25), transparent 45%),
+        linear-gradient(115deg, rgba(255,255,255,.12), rgba(0,0,0,.10));
+      animation: drift 14s ease-in-out infinite;
+    }
+
+    @keyframes drift{
+      0%   { transform: translate(0,0) scale(1); }
+      50%  { transform: translate(-8px,6px) scale(1.02); }
+      100% { transform: translate(0,0) scale(1); }
+    }
+
+    /* Hide modern Leaflet controls */
+    .leaflet-control-zoom{ display: none; }
+
+    /* Popup styling */
+    .leaflet-popup-content-wrapper{
+      border-radius: 14px;
+      box-shadow: 0 10px 26px rgba(0,0,0,.22);
+    }
+
+    .popup{
+      width: 260px;
+    }
+
+    .popup img{
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .popup-row{
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .popup-row a{
+      text-decoration: none;
+      padding: 5px 10px;
+      border: 1px solid rgba(0,0,0,.25);
+      background: linear-gradient(#ffffff, #e2e2e2);
+      color: #111;
+      border-radius: 3px;
+    }
+
+    /* Coordinate display */
+    .coords{
+      position: absolute;
+      right: 14px;
+      bottom: 12px;
+      z-index: 500;
+      background: rgba(255,255,255,.85);
+      border: 1px solid rgba(0,0,0,.2);
+      padding: 8px 10px;
+      font-size: 12px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="stage">
+    <div class="gmaps-window">
+
+      <div class="titlebar">
+        <span class="dot"></span>
+        <span>GoogleMaps Directions Test</span>
+        <div class="winbtns">
+          <span class="winbtn"></span>
+          <span class="winbtn"></span>
+          <span class="winbtn"></span>
+        </div>
+      </div>
+
+      <!-- Option A navigation -->
+      <nav class="tabs">
+        <a class="active" href="#">Map</a>
+        <a href="https://frawleyevan9.wordpress.com/image/" target="_top">Image</a>
+        <a href="https://frawleyevan9.wordpress.com/sound/" target="_top">Sound</a>
+        <a href="https://frawleyevan9.wordpress.com/writing/" target="_top">Writing</a>
+      </nav>
+
+      <div class="map-wrap">
+        <div id="map"></div>
+        <div class="warp-overlay"></div>
+        <div class="coords" id="coords">—</div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const project = {
+      title: "ARTH 385",
+      lat: 42.76119656200755,
+      lng: -89.51395140670209,
+      zoom: 17,
+      image: "https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format&fit=crop&w=900&q=80",
+      link: "https://frawleyevan9.wordpress.com/image/"
+    };
+
+    const map = L.map("map", {
+      zoomControl: false,
+      attributionControl: false
+    }).setView([project.lat, project.lng], project.zoom);
+
+    L.tileLayer(
+      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+      { maxZoom: 19 }
+    ).addTo(map);
+
+    const popupHTML = `
+      <div class="popup">
+        <img src="${project.image}" alt="${project.title}">
+        <div class="popup-row">
+          <span>${project.title}</span>
+          <a href="${project.link}" target="_top">Open</a>
+        </div>
+      </div>
+    `;
+
+    const marker = L.marker([project.lat, project.lng]).addTo(map);
+    marker.bindPopup(popupHTML, { maxWidth: 300 }).openPopup();
+
+    const coordBox = document.getElementById("coords");
+    const fmt = n => (Math.round(n * 1e7) / 1e7).toFixed(7);
+
+    coordBox.textContent = `${fmt(project.lat)}, ${fmt(project.lng)}`;
+
+    map.on("mousemove", e => {
+      coordBox.textContent = `${fmt(e.latlng.lat)}, ${fmt(e.latlng.lng)}`;
+    });
+  </script>
+</body>
+</html>
