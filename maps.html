@@ -71,3 +71,19 @@
   <script src="assets/js/render-projects.js"></script>
 </body>
 </html>
+
+<!-- add these at the bottom of maps.html BEFORE render-projects.js (or where other scripts are) -->
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin=""
+></script>
+
+<!-- your project data must load before map.js -->
+<script src="assets/js/projects-data.js"></script>
+
+<!-- map logic (reads window.PROJECTS and uses L) -->
+<script src="assets/js/map.js"></script>
+
+<!-- renderer that shows the grid on the Maps page -->
+<script src="assets/js/render-projects.js"></script>
