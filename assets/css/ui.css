@@ -181,3 +181,23 @@ body::before{
   font-size: 16px;
   line-height: 1.35;
 }
+
+/* =========================================================
+   Leaflet / Map window sizing (required for the homepage map)
+   ========================================================= */
+
+.map-window{
+  border: 2px solid var(--ui-border);
+  box-shadow: 0 12px 28px rgba(0,0,0,.18);
+  background:#dfeaf4;
+  position:relative;
+  overflow:hidden;
+  aspect-ratio: 4 / 3;
+  min-height: 520px;
+}
+
+/* The Leaflet map fills the window under the titlebar */
+#map{
+  position:absolute;
+  inset:26px 0 0 0; /* below the titlebar */
+}
