@@ -1,0 +1,37 @@
+/* assets/css/fonts.css */
+
+/* SK Concretica — display / name */
+@font-face {
+  font-family: "SK Concretica";
+  src: url("../fonts/sk-concretica-trial.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Neue Machina — light */
+@font-face {
+  font-family: "Neue Machina";
+  src: url("../fonts/NeueMachina-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Neue Machina — regular */
+@font-face {
+  font-family: "Neue Machina";
+  src: url("../fonts/NeueMachina-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Neue Machina — ultrabold */
+@font-face {
+  font-family: "Neue Machina";
+  src: url("../fonts/NeueMachina-Ultrabold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
