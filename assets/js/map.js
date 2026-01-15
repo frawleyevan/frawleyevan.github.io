@@ -1,12 +1,11 @@
 (function () {
-  // 1) Find the container we inject into
   const container = document.getElementById("map-window");
   if (!container) {
     console.error('map.js: No element with id="map-window" found.');
     return;
   }
 
-  // 2) Inject the map window UI (retro window + actual Leaflet mount point)
+  // Inject the map window UI
   container.innerHTML = `
     <div class="map-window">
       <div class="titlebar">
@@ -17,44 +16,60 @@
     </div>
   `;
 
-  // 3) Guard: Leaflet must exist
   if (typeof L === "undefined") {
     console.error("map.js: Leaflet (L) is not defined. Check Leaflet script tag in index.html.");
     return;
   }
 
-  // 4) Guard: Projects must exist (from assets/js/projects.js)
   if (!window.PROJECTS || !Array.isArray(window.PROJECTS)) {
-    console.error("map.js: window.PROJECTS is missing or not an array. Ensure projects.js loads before map.js.");
+    console.error("map.js: window.PROJECTS missing/not array. Ensure projects.js loads before map.js.");
     return;
   }
 
-  // 5) Initialize the Leaflet map
   const map = L.map("map", {
     attributionControl: false,
     scrollWheelZoom: false,
-    zoomControl: true // default zoom (+/-) top-left
+    zoomControl: true
   });
 
-  // 6) Add satellite tiles
+  // Satellite tiles
   L.tileLayer(
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
     { maxZoom: 19 }
   ).addTo(map);
 
-  // 7) Coordinates UI behavior
+  // Coordinate display
   const coordsEl = document.getElementById("coords");
-  let lockedCoordsText = coordsEl ? (coordsEl.textContent || "Hover a pin…") : "Hover a pin…";
+  const defaultText = "Move over the map…";
+  let isLocked = false;
+  let lockedCoordsText = defaultText;
 
   function setCoords(text) {
     if (coordsEl) coordsEl.textContent = text;
   }
 
-  // 8) Add markers + popups
+  // Show coords anywhere on the map (mousemove)
+  map.on("mousemove", (e) => {
+    if (isLocked) return;
+    setCoords(`${e.latlng.lat.toFixed(6)}, ${e.latlng.lng.toFixed(6)}`);
+  });
+
+  // If you leave the map area, show locked coords or default
+  map.on("mouseout", () => {
+    setCoords(isLocked ? lockedCoordsText : defaultText);
+  });
+
+  // Clicking empty map area unlocks
+  map.on("click", () => {
+    isLocked = false;
+    lockedCoordsText = defaultText;
+    setCoords(defaultText);
+  });
+
+  // Add markers
   const bounds = [];
 
   window.PROJECTS.forEach((p) => {
-    // Defensive: skip malformed entries
     if (
       typeof p.lat !== "number" ||
       typeof p.lng !== "number" ||
@@ -88,24 +103,38 @@
       .addTo(map)
       .bindPopup(popupHTML, { maxWidth: 360 });
 
-    // Hover: live preview coords
-    marker.on("mouseover", () => setCoords(`${p.lat.toFixed(6)}, ${p.lng.toFixed(6)}`));
-    marker.on("mouseout", () => setCoords(lockedCoordsText));
+    // Hover over pin: show the project's exact coords
+    marker.on("mouseover", () => {
+      if (isLocked) return;
+      setCoords(`${p.lat.toFixed(6)}, ${p.lng.toFixed(6)}`);
+    });
 
-    // Click: lock coords (and open popup)
-    marker.on("click", () => {
+    // Click pin: LOCK coords
+    marker.on("click", (e) => {
+      // prevent map click from immediately unlocking
+      if (e && e.originalEvent) L.DomEvent.stopPropagation(e);
+
+      isLocked = true;
       lockedCoordsText = `${p.lat.toFixed(6)}, ${p.lng.toFixed(6)}`;
       setCoords(lockedCoordsText);
     });
   });
 
-  // 9) Fit view
+  // Fit view to markers
   if (bounds.length) {
     map.fitBounds(bounds, { padding: [40, 40] });
+
+    // Zoom in one notch (optional "less huge" look).
+    // With global pins, this may crop the most distant pins slightly — but feels better.
+    const z = map.getZoom();
+    map.setZoom(Math.min(z + 1, 19));
   } else {
     map.setView([20, 0], 2);
   }
 
-  // 10) Safety: force Leaflet to recalc size after layout settles
+  // Force Leaflet to calculate size after layout paints
   setTimeout(() => map.invalidateSize(), 250);
+
+  // Initialize coords text
+  setCoords(defaultText);
 })();
