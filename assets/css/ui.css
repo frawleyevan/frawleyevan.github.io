@@ -1,21 +1,27 @@
-/* assets/css/ui.css */
+/* assets/css/ui.css
+   Shared UI system (old-school Google Maps UI vibe)
+   BUT: Typography defaults to Neue Machina across the site.
+   UI chrome (nav, titlebars) stays Arial for intentional retro UI.
+*/
 
 :root{
-  --ui-font: Arial, Helvetica, sans-serif;
+  /* Type */
+  --ui-font: Arial, Helvetica, sans-serif;          /* UI chrome */
   --type-body: "Neue Machina", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  --type-display: "SK Concretica", sans-serif;
+  --type-display: "SK Concretica", "Neue Machina", system-ui, sans-serif;
 
-  --ui-bg: #e7eef5;
+  /* Colors */
   --ui-border: #7fa1bb;
+  --ui-bg: #e7eef5;
   --ui-titlebar: linear-gradient(#cfe1f1, #9fc0d8);
-
   --text: rgba(0,0,0,.85);
-  --text-soft: rgba(0,0,0,.70);
 
+  /* Layout */
   --page-max: 1180px;
   --gutter: 18px;
 }
 
+/* Base */
 *{ box-sizing:border-box; }
 
 html, body{
@@ -23,16 +29,19 @@ html, body{
   padding:0;
   background: var(--ui-bg);
   color: var(--text);
-  font-family: var(--ui-font);
+
+  /* IMPORTANT CHANGE:
+     Default site font is Neue Machina now */
+  font-family: var(--type-body);
 }
 
-/* subtle pixel/noise wash (global) */
+/* Subtle pixel/noise overlay across entire site */
 body::before{
   content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  opacity:.05;
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .06;
   background:
     linear-gradient(rgba(0,0,0,.10) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0,0,0,.10) 1px, transparent 1px);
@@ -40,6 +49,7 @@ body::before{
   mix-blend-mode: multiply;
 }
 
+/* Shell */
 .page{
   max-width: var(--page-max);
   margin: 0 auto;
@@ -57,39 +67,37 @@ body::before{
 
 .brand{
   font-family: var(--type-display);
-  font-size: 56px;
+  font-size: 64px;
   font-weight: 400;
   letter-spacing: 0.02em;
   line-height: 0.95;
+  color: rgba(0,0,0,.70);
 }
 
-/* Nav buttons */
+/* Nav (kept UI-ish) */
 .nav{
   display:flex;
   gap: 10px;
   flex-wrap: wrap;
-  justify-content:flex-end;
+  justify-content: flex-end;
 }
 
 .nav a{
-  font-family: var(--type-body);
-  font-weight: 400;
-  letter-spacing: 0.04em;
+  font-family: var(--ui-font); /* Arial for UI chrome */
   text-decoration:none;
   color:#000;
-
-  padding: 8px 14px;
+  padding: 7px 14px;
   border: 2px solid rgba(0,0,0,.55);
   background: linear-gradient(#ffffff, #dcdcdc);
+  font-weight: 800;
+  font-size: 14px;
   position: relative;
   overflow: hidden;
-  font-size: 14px;
 }
 
 .nav a.active{
   outline: 2px solid #3a78ff;
   outline-offset: -2px;
-  font-weight: 800;
 }
 
 .nav a::after{
@@ -105,15 +113,29 @@ body::before{
   mix-blend-mode: multiply;
 }
 
-/* Shared “window chrome” */
+/* Two-column layout helper (homepage uses this) */
+.grid{
+  display:grid;
+  grid-template-columns: 1fr 320px;
+  gap: 18px;
+  align-items:start;
+}
+
+@media (max-width: 900px){
+  .grid{ grid-template-columns: 1fr; }
+  .brand{ font-size: 44px; }
+}
+
+/* Window chrome wrapper (Maps/Image/etc.) */
 .window{
   border: 2px solid var(--ui-border);
   box-shadow: 0 12px 28px rgba(0,0,0,.18);
-  background:#dfeaf4;
-  overflow:hidden;
-  position:relative;
+  background: #dfeaf4;
+  position: relative;
+  overflow: hidden;
 }
 
+/* Titlebar chrome stays Arial */
 .titlebar{
   height:26px;
   display:flex;
@@ -126,6 +148,7 @@ body::before{
   font-weight:900;
   color:#0b2a3d;
   user-select:none;
+  font-family: var(--ui-font);
 }
 
 .titlebar .dot{
@@ -136,7 +159,25 @@ body::before{
   border:1px solid rgba(0,0,0,.25);
 }
 
-@media (max-width: 900px){
-  .header{ flex-direction:column; align-items:flex-start; }
-  .brand{ font-size: 40px; }
+/* Inner panel area (where content lives) */
+.projects-window{
+  background: rgba(255,255,255,.75);
+  padding: 14px;
+}
+
+/* Common page titles */
+.section-title{
+  margin: 18px 0 10px;
+  font-size: 44px;
+  font-weight: 800;
+  color: rgba(0,0,0,.80);
+  letter-spacing: -0.01em;
+}
+
+.section-subtitle{
+  margin: 0 0 22px;
+  max-width: 62ch;
+  color: rgba(0,0,0,.60);
+  font-size: 16px;
+  line-height: 1.35;
 }
