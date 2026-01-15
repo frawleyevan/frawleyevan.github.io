@@ -17,15 +17,13 @@
   />
 
   <style>
-    /* Home-specific tweaks to match your mockup */
+    /* Home-specific tweaks */
 
-    /* Slightly tighter top spacing */
     .page { padding-top: 18px; }
 
-    /* Make header feel like a clean ribbon */
-    .header { margin-bottom: 14px; }
+    /* More space between header and content */
+    .header { margin-bottom: 28px; }
 
-    /* Right column card */
     .sidecard{
       background: transparent;
       padding-top: 6px;
@@ -59,13 +57,16 @@
       font-weight: 900;
     }
 
-    /* Make the map column feel like the mockup (bigger) */
+    /* Layout */
     .grid{
       grid-template-columns: 1fr 320px;
     }
+
+    /* Make map taller + prevent collapse */
     .map-window{
-      aspect-ratio: 4 / 3; /* closer to your mockup proportions */
+      aspect-ratio: 4 / 3;
       border-width: 3px;
+      min-height: 560px;
     }
 
     /* Optional: subtle pixel/noise overlay across the whole page */
@@ -108,10 +109,9 @@
 
       <!-- Right: bio + coordinates -->
       <aside class="sidecard">
-        <!-- Replace this src with your preferred portrait URL later -->
         <img
           class="bio-pic"
-          src="https://frawleyevan9.wordpress.com/wp-content/uploads/2026/01/screenshot-2026-01-14-184127.png"
+          src="https://frawleyevan9.wordpress.com/wp-content/uploads/2026/01/0005932600351.jpg"
           alt="Portrait of Evan Frawley"
         />
 
@@ -125,23 +125,22 @@
 
         <div class="coords-block">
           <span class="coords-label">Coordinates:</span><br />
-          <span id="coords">Click a pin…</span>
+          <span id="coords">Hover a pin…</span>
         </div>
       </aside>
 
     </div>
   </div>
 
-  <!-- Leaflet JS (CDN) -->
+  <!-- Leaflet JS (CDN) - only load ONCE -->
   <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin=""
   ></script>
 
-  <!-- Your data + map code -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="assets/js/projects.js"></script>
-<script src="assets/js/map.js"></script>
+  <!-- Your data + map code (order matters) -->
+  <script src="assets/js/projects.js"></script>
+  <script src="assets/js/map.js"></script>
 </body>
 </html>
