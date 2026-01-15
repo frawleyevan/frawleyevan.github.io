@@ -1,98 +1,156 @@
-/* assets/css/portfolio.css */
+/* assets/css/portfolio.css
+   Portfolio listing pages (Maps / Image / Sound / Writing)
+   Designed to sit INSIDE the shared UI system from ui.css.
 
-/* Title + intro text should use Neue Machina */
+   Assumes ui.css defines:
+   --type-body, --type-display, --ui-font, --text, etc.
+*/
+
+/* ---------------------------------------------------------
+   Base (do NOT override global html/body background)
+   --------------------------------------------------------- */
+
+*{ box-sizing: border-box; }
+
+a{
+  color: inherit;
+  text-decoration: none;
+}
+
+a:active{ opacity: .75; }
+
+/* Make sure these pages use Neue Machina by default */
+body{
+  font-family: var(--type-body);
+  color: var(--text);
+}
+
+/* ---------------------------------------------------------
+   Header + titles (inherits layout from ui.css)
+   --------------------------------------------------------- */
+
+.brand{
+  font-family: var(--type-display);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* Section title/subtitle match your screenshot style */
 .section-title{
-  font-family: "Neue Machina", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  margin: 18px 0 10px;
+  font-size: 44px;
   font-weight: 800;
-  font-size: 36px;
-  margin: 8px 0 10px;
+  letter-spacing: -0.01em;
+  color: rgba(0,0,0,.80);
 }
 
 .section-subtitle{
-  font-family: "Neue Machina", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  font-weight: 300;
-  color: rgba(0,0,0,.72);
   margin: 0 0 18px;
-  max-width: 70ch;
+  max-width: 62ch;
+  font-size: 16px;
   line-height: 1.35;
+  color: rgba(0,0,0,.60);
 }
 
-/* Put your projects inside a window so it reads “UI” not “blog list” */
+/* ---------------------------------------------------------
+   Window wrapper (optional)
+   If you wrap your grid like:
+   <div class="window">
+   <div class="titlebar"><span class="dot"></span>Maps — Projects</div>
+   <div class="projects-window">...</div>
+   </div>
+   --------------------------------------------------------- */
+
 .projects-window{
-  padding: 14px;
-  background: rgba(255,255,255,.35);
+  /* this class is also in ui.css; these are safe additions */
+  padding: 16px;
 }
 
-.projects-grid{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 22px;
-  align-items:start;
-}
+/* ---------------------------------------------------------
+   Grid (Cargo-ish)
+   Use one of these in HTML:
+   - <section class="projects-grid"> ... </section>
+   OR
+   - <section class="grid"> ... </section> (back-compat)
+   --------------------------------------------------------- */
 
-@media (max-width: 980px){
-  .projects-grid{ grid-template-columns: 1fr; }
-}
-
-/* Cargo-ish card, but still within the UI system */
-.project{
-  background:#fff;
-  border: 1px solid rgba(0,0,0,.15);
-}
-
-.project-media{
-  width:100%;
-  display:block;
-  aspect-ratio: 16/9;
-  object-fit: cover;
-  background:#eee;
-}
-
-.project-body{
-  padding: 12px 14px 14px;
-  display:flex;
-  flex-direction:column;
-  gap: 8px;
-}
-
-.project-title{
-  font-family: "Neue Machina", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  font-weight: 800;
-  font-size: 15px;
-  margin:0;
-}
-
-.project-caption{
-  font-family: "Neue Machina", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  font-weight: 300;
-  font-size: 13px;
-  line-height: 1.35;
-  color: rgba(0,0,0,.72);
-  margin:0;
-}
-
-.project-link{
-  align-self:flex-start;
-  font-family: "Neue Machina", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  font-weight: 800;
-  font-size: 13px;
-  text-decoration:none;
-  border-bottom: 1px solid rgba(0,0,0,.45);
-  color:#000;
-}
-.project-link:hover{ border-bottom-color:#000; }
-
-/* Rendered grid container */
-.projects-grid{
-  display:grid;
+.projects-grid,
+.grid{
+  display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 26px 22px;
-  align-items:start;
+  align-items: start;
 }
 
 @media (max-width: 900px){
-  .projects-grid{ grid-template-columns: 1fr; }
+  .projects-grid,
+  .grid{
+    grid-template-columns: 1fr;
+  }
 }
 
-/* Optional: spacing inside the window panel */
-.project{ border-top: 1px solid rgba(0,0,0,.15); padding-top: 14px; }
+/* ---------------------------------------------------------
+   Project card (minimal, Cargo-like)
+   --------------------------------------------------------- */
+
+.project{
+  border-top: 1px solid rgba(0,0,0,.15);
+  padding-top: 14px;
+}
+
+.project-media{
+  width: 100%;
+  display: block;
+  border: 1px solid rgba(0,0,0,.15);
+  background: #fff;
+}
+
+/* Title */
+.project-title{
+  margin: 12px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  color: rgba(0,0,0,.78);
+  letter-spacing: -0.005em;
+}
+
+/* Meta row: caption left, View link right */
+.project-meta{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.project-caption{
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.3;
+  color: rgba(0,0,0,.60);
+  max-width: 70ch;
+}
+
+/* View link */
+.project-link{
+  font-family: var(--ui-font); /* keeps “UI” feel if you want */
+  font-size: 14px;
+  font-weight: 800;
+  color: rgba(0,0,0,.75);
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+.project-link:hover{
+  color: rgba(0,0,0,.95);
+}
+
+/* ---------------------------------------------------------
+   Optional: tighter, “printed” feel for captions on small screens
+   --------------------------------------------------------- */
+
+@media (max-width: 520px){
+  .section-title{ font-size: 38px; }
+  .project-title{ font-size: 17px; }
+  .project-caption{ font-size: 13px; }
+  .project-link{ font-size: 13px; }
+}
