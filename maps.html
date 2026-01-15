@@ -5,7 +5,11 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Maps — Evan Frawley</title>
 
-  <!-- maps page styling -->
+  <!-- Shared fonts + shared Google-Maps-ish UI system -->
+  <link rel="stylesheet" href="assets/css/fonts.css" />
+  <link rel="stylesheet" href="assets/css/ui.css" />
+
+  <!-- Portfolio grid styling (cards + layout) -->
   <link rel="stylesheet" href="assets/css/portfolio.css" />
 </head>
 
@@ -29,60 +33,23 @@
       Cartographic work, research visuals, and spatial storytelling. Click “View” for each project page.
     </p>
 
-    <section class="grid">
+    <!-- Window chrome wrapper so it reads as intentional UI -->
+    <section class="window" aria-label="Maps projects">
+      <div class="titlebar">
+        <span class="dot"></span>
+        Maps — Projects
+      </div>
 
-      <!-- 1) Madison -->
-      <article class="project">
-        <img class="project-media"
-          src="https://frawleyevan9.wordpress.com/wp-content/uploads/2026/01/geog280final4.png"
-          alt="Beyond Decibels: Soundscape-based policy framework map"
-          loading="lazy" />
-
-        <div class="project-title">Beyond Decibels: A Soundscape-Based Policy Framework</div>
-
-        <div class="project-meta">
-          <p class="project-caption">
-            Madison, Wisconsin. Noise, equity, and urban form — translating soundscape theory into policy-ready maps.
-          </p>
-          <a class="project-link" href="projects/madison.html">View</a>
-        </div>
-      </article>
-
-      <!-- 2) Manitowoc -->
-      <article class="project">
-        <img class="project-media"
-          src="https://frawleyevan9.wordpress.com/wp-content/uploads/2026/01/screenshot-2026-01-14-184127.png"
-          alt="River Point District project proposal map"
-          loading="lazy" />
-
-        <div class="project-title">River Point District Project Proposal</div>
-
-        <div class="project-meta">
-          <p class="project-caption">
-            Manitowoc, Wisconsin. A planning-focused proposal with diagrams and cartographic framing.
-          </p>
-          <a class="project-link" href="projects/manitowoc.html">View</a>
-        </div>
-      </article>
-
-      <!-- 3) Marburg -->
-      <article class="project">
-        <img class="project-media"
-          src="https://frawleyevan9.wordpress.com/wp-content/uploads/2026/01/marburg-03.jpg"
-          alt="Cycling Safety Perceptions in Marburg, Germany"
-          loading="lazy" />
-
-        <div class="project-title">Cycling Safety Perceptions in Marburg, Germany</div>
-
-        <div class="project-meta">
-          <p class="project-caption">
-            Spatial analysis of perceived cycling safety — clustering, infrastructure context, and design implications.
-          </p>
-          <a class="project-link" href="projects/marburg.html">View</a>
-        </div>
-      </article>
-
+      <div class="projects-window">
+        <!-- Render script injects cards into this container -->
+        <div id="projects-grid" class="projects-grid"></div>
+      </div>
     </section>
+
   </div>
+
+  <!-- Data + renderer (order matters) -->
+  <script src="assets/js/projects.js"></script>
+  <script src="assets/js/render-projects.js"></script>
 </body>
 </html>
