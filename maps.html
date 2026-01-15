@@ -5,17 +5,24 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Maps — Evan Frawley</title>
 
-  <!-- Shared fonts + shared Google-Maps-ish UI system -->
+  <!-- ===============================
+       Fonts + Shared UI system
+       =============================== -->
   <link rel="stylesheet" href="assets/css/fonts.css" />
   <link rel="stylesheet" href="assets/css/ui.css" />
 
-  <!-- Portfolio grid styling (cards + layout) -->
+  <!-- ===============================
+       Portfolio grid styling
+       =============================== -->
   <link rel="stylesheet" href="assets/css/portfolio.css" />
 </head>
 
 <body>
   <div class="page">
 
+    <!-- ===============================
+         Header
+         =============================== -->
     <header class="header">
       <div class="brand">Evan Frawley</div>
 
@@ -28,12 +35,17 @@
       </nav>
     </header>
 
+    <!-- ===============================
+         Page intro
+         =============================== -->
     <h1 class="section-title">Maps</h1>
     <p class="section-subtitle">
       Cartographic work, research visuals, and spatial storytelling. Click “View” for each project page.
     </p>
 
-    <!-- Window chrome wrapper so it reads as intentional UI -->
+    <!-- ===============================
+         Projects window (UI chrome)
+         =============================== -->
     <section class="window" aria-label="Maps projects">
       <div class="titlebar">
         <span class="dot"></span>
@@ -41,14 +53,20 @@
       </div>
 
       <div class="projects-window">
-        <!-- Render script injects cards into this container -->
-        <div id="projects-grid" class="projects-grid"></div>
+        <!-- If JS fails, you'll see this message; JS will replace it when it runs -->
+        <div id="projects-grid" class="projects-grid">
+          <p style="margin:0; color: rgba(0,0,0,.65); font-size: 14px;">
+            Loading projects…
+          </p>
+        </div>
       </div>
     </section>
 
   </div>
 
-  <!-- Data + renderer (order matters) -->
+  <!-- ===============================
+       Data + renderer (order matters)
+       =============================== -->
   <script src="assets/js/projects.js"></script>
   <script src="assets/js/render-projects.js"></script>
 </body>
