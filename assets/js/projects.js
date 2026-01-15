@@ -1,42 +1,42 @@
-window.PROJECTS = [
-  {
-    id: "finland",
-    title: "Art & Social Sustainability: Public Spaces That Inspire",
-    lat: 60.17744444444444,
-    lng: 24.92025,
-    image: "https://frawleyevan9.wordpress.com/wp-content/uploads/2026/01/img_9917.jpg",
-    page: "writing.html#finland"
-  },
-  {
-    id: "marburg",
-    title: "Cycling Safety Perceptions in Marburg, Germany: A Spatial Analysis",
-    lat: 50.80775,
-    lng: 8.772333333333334,
-    image: "https://frawleyevan9.wordpress.com/wp-content/uploads/2026/01/marburg-03.jpg",
-    page: "maps.html#marburg"
-  },
-  {
-    id: "arizona",
-    title: "Car-Free in the Capital of Sprawl: The Trade-Offs of Living in Culdesac Tempe",
-    lat: 33.41408333333333,
-    lng: -111.89933333333335,
-    image: "https://frawleyevan9.wordpress.com/wp-content/uploads/2026/01/img_1080.jpg",
-    page: "writing.html#arizona"
-  },
-  {
-    id: "manitowoc",
-    title: "River Point District Project Proposal",
-    lat: 44.09505555555556,
-    lng: -87.66352777777779,
-    image: "https://frawleyevan9.wordpress.com/wp-content/uploads/2026/01/screenshot-2026-01-14-184127.png",
-    page: "writing.html#manitowoc"
-  },
-  {
-    id: "madison",
-    title: "Beyond Decibels: A Soundscape-Based Policy Framework for Urban Noise Pollution in Madison, Wisconsin",
-    lat: 43.034555555555556,
-    lng: -89.43697222222222,
-    image: "https://frawleyevan9.wordpress.com/wp-content/uploads/2026/01/geog280final4.png",
-    page: "sound.html#madison"
+// assets/js/render-projects.js
+(function () {
+  const grid = document.getElementById("projects-grid");
+  if (!grid) return;
+
+  const list = window.PROJECTS;
+  if (!Array.isArray(list)) {
+    grid.innerHTML = "<p>Projects data not found.</p>";
+    return;
   }
-];
+
+  // Determine the page we are on: "maps.html", "image.html", etc.
+  const filename = (location.pathname.split("/").pop() || "").toLowerCase();
+
+  // Filter: show projects whose `page` includes this filename
+  // e.g. maps.html shows only entries where page contains "maps.html"
+  const filtered = list.filter((p) => {
+    if (!p || typeof p.page !== "string") return false;
+    return p.page.toLowerCase().includes(filename);
+  });
+
+  if (!filtered.length) {
+    grid.innerHTML = "<p>No projects yet.</p>";
+    return;
+  }
+
+  grid.innerHTML = filtered.map((p) => {
+    const title = p.title || "Untitled project";
+    const img = p.image || "";
+    const href = p.page || "#";
+
+    return `
+      <article class="project">
+        ${img ? `<img class="project-media" src="${img}" alt="${title}" loading="lazy" />` : ""}
+        <div class="project-meta">
+          <p class="project-caption">${title}</p>
+          <a class="project-link" href="${href}">View</a>
+        </div>
+      </article>
+    `;
+  }).join("");
+})();
