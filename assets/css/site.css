@@ -1,3 +1,129 @@
+/* =========================================================
+   Custom Fonts
+   ========================================================= */
+
+/* SK Concretica — display / name */
+@font-face {
+  font-family: "SK Concretica";
+  src: url("../fonts/sk-concretica-trial.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Neue Machina — light */
+@font-face {
+  font-family: "Neue Machina";
+  src: url("../fonts/NeueMachina-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Neue Machina — regular */
+@font-face {
+  font-family: "Neue Machina";
+  src: url("../fonts/NeueMachina-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Neue Machina — ultrabold */
+@font-face {
+  font-family: "Neue Machina";
+  src: url("../fonts/NeueMachina-Ultrabold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* =========================================================
+   Global Defaults
+   ========================================================= */
+
+body {
+  font-family: "Neue Machina", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.85);
+  background: #ffffff;
+}
+
+/* =========================================================
+   Header / Branding
+   ========================================================= */
+
+.brand {
+  font-family: "SK Concretica", sans-serif;
+  font-weight: 400;
+  font-size: 2.6rem;
+  letter-spacing: 0.02em;
+}
+
+/* =========================================================
+   Navigation
+   ========================================================= */
+
+.nav a {
+  font-family: "Neue Machina", sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.nav a.active {
+  font-weight: 800;
+}
+
+/* =========================================================
+   Bio Column
+   ========================================================= */
+
+.bio {
+  font-family: "Neue Machina", sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.bio b,
+.bio strong {
+  font-weight: 800;
+}
+
+/* =========================================================
+   Coordinates
+   ========================================================= */
+
+.coords-block {
+  font-family: "Neue Machina", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+}
+
+.coords-label {
+  font-weight: 800;
+}
+
+/* =========================================================
+   Portfolio Cards (Maps page)
+   ========================================================= */
+
+.card-title {
+  font-family: "SK Concretica", sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.card-meta,
+.card-desc {
+  font-family: "Neue Machina", sans-serif;
+  font-weight: 300;
+}
+
+
 :root{
   --ui-font: Arial, Helvetica, sans-serif;
   --ui-border: #7fa1bb;
