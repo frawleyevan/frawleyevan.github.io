@@ -80,3 +80,39 @@ html, body{
   .grid{ grid-template-columns: 1fr; }
   .brand{ font-size: 34px; }
 }
+
+.map-window{
+  border: 2px solid var(--ui-border);
+  box-shadow: 0 12px 28px rgba(0,0,0,.18);
+  background:#dfeaf4;
+  position:relative;
+  overflow:hidden;
+  aspect-ratio: 16/10;
+}
+
+.titlebar{
+  height:26px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:0 8px;
+  background: var(--ui-titlebar);
+  border-bottom:1px solid rgba(0,0,0,.25);
+  font-size:12px;
+  font-weight:900;
+  color:#0b2a3d;
+  user-select:none;
+}
+
+.titlebar .dot{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:radial-gradient(#fff,#c9c9c9);
+  border:1px solid rgba(0,0,0,.25);
+}
+
+#map{
+  position:absolute;
+  inset:26px 0 0 0;
+}
