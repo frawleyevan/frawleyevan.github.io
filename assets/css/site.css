@@ -87,7 +87,8 @@ html, body{
   background:#dfeaf4;
   position:relative;
   overflow:hidden;
-  aspect-ratio: 4/3;
+  aspect-ratio: 4 / 3;
+  min-height: 520px;
 }
 
 .titlebar{
