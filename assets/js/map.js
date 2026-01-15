@@ -2,7 +2,7 @@
   const container = document.getElementById("map-window");
   if (!container) return;
 
-  // Build a retro "window" + map container
+  // Inject the map window UI
   container.innerHTML = `
     <div class="map-window">
       <div class="titlebar">
@@ -13,18 +13,39 @@
     </div>
   `;
 
+  // If Leaflet didn't load, fail silently (prevents full page break)
+  if (typeof L === "undefined") {
+    console.error("Leaflet (L) is not defined. Check Leaflet <script> tag in index.html.");
+    return;
+  }
+
+  // Create the map
   const map = L.map("map", {
     attributionControl: false,
     scrollWheelZoom: false
   });
 
-  // Satellite tiles (ArcGIS World Imagery)
+  // Satellite tiles
   L.tileLayer(
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
     { maxZoom: 19 }
   ).addTo(map);
 
+  // Coordinate display behavior
+  const coordsEl = document.getElementById("coords");
+  let lockedCoordsText = coordsEl ? coordsEl.textContent : "Hover a pin…";
+
+  function setCoords(text) {
+    if (coordsEl) coordsEl.textContent = text;
+  }
+
+  // Add markers
   const bounds = [];
+
+  if (!window.PROJECTS || !Array.isArray(window.PROJECTS)) {
+    console.error("PROJECTS is missing. Check that projects.js loads before map.js in index.html.");
+    return;
+  }
 
   window.PROJECTS.forEach(p => {
     bounds.push([p.lat, p.lng]);
@@ -47,26 +68,23 @@
       </div>
     `;
 
-const coordsEl = document.getElementById("coords");
-const defaultCoordsText = coordsEl ? coordsEl.textContent : "";
+    const marker = L.marker([p.lat, p.lng]).addTo(map).bindPopup(popupHTML, { maxWidth: 360 });
 
-function setCoords(text){
-  if (coordsEl) coordsEl.textContent = text;
-}
+    // Hover updates coords live
+    marker.on("mouseover", () => setCoords(`${p.lat.toFixed(6)}, ${p.lng.toFixed(6)}`));
+    marker.on("mouseout", () => setCoords(lockedCoordsText));
 
-marker.on("mouseover", () => {
-  setCoords(`${p.lat.toFixed(6)}, ${p.lng.toFixed(6)}`);
-});
+    // Click "locks" coords
+    marker.on("click", () => {
+      lockedCoordsText = `${p.lat.toFixed(6)}, ${p.lng.toFixed(6)}`;
+      setCoords(lockedCoordsText);
+    });
+  });
 
-marker.on("mouseout", () => {
-  // restore whatever it was before hover (or a default)
-  setCoords(defaultCoordsText || "Hover a pin…");
-});
-
-marker.on("click", () => {
-  // on click, “lock” the coords by updating the default text
-  const locked = `${p.lat.toFixed(6)}, ${p.lng.toFixed(6)}`;
-  setCoords(locked);
-  // update defaultCoordsText behavior by overwriting the element’s text baseline
-  // (simple + works without extra globals)
-});
+  // Fit map to markers
+  if (bounds.length) {
+    map.fitBounds(bounds, { padding: [40, 40] });
+  } else {
+    map.setView([20, 0], 2);
+  }
+})();
