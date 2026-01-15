@@ -1,0 +1,142 @@
+/* assets/css/ui.css */
+
+:root{
+  --ui-font: Arial, Helvetica, sans-serif;
+  --type-body: "Neue Machina", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  --type-display: "SK Concretica", sans-serif;
+
+  --ui-bg: #e7eef5;
+  --ui-border: #7fa1bb;
+  --ui-titlebar: linear-gradient(#cfe1f1, #9fc0d8);
+
+  --text: rgba(0,0,0,.85);
+  --text-soft: rgba(0,0,0,.70);
+
+  --page-max: 1180px;
+  --gutter: 18px;
+}
+
+*{ box-sizing:border-box; }
+
+html, body{
+  margin:0;
+  padding:0;
+  background: var(--ui-bg);
+  color: var(--text);
+  font-family: var(--ui-font);
+}
+
+/* subtle pixel/noise wash (global) */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.05;
+  background:
+    linear-gradient(rgba(0,0,0,.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,.10) 1px, transparent 1px);
+  background-size: 3px 3px;
+  mix-blend-mode: multiply;
+}
+
+.page{
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 22px var(--gutter) 60px;
+}
+
+/* Header */
+.header{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.brand{
+  font-family: var(--type-display);
+  font-size: 56px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 0.95;
+}
+
+/* Nav buttons */
+.nav{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content:flex-end;
+}
+
+.nav a{
+  font-family: var(--type-body);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-decoration:none;
+  color:#000;
+
+  padding: 8px 14px;
+  border: 2px solid rgba(0,0,0,.55);
+  background: linear-gradient(#ffffff, #dcdcdc);
+  position: relative;
+  overflow: hidden;
+  font-size: 14px;
+}
+
+.nav a.active{
+  outline: 2px solid #3a78ff;
+  outline-offset: -2px;
+  font-weight: 800;
+}
+
+.nav a::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.10;
+  background:
+    linear-gradient(rgba(0,0,0,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,.05) 1px, transparent 1px);
+  background-size: 3px 3px;
+  mix-blend-mode: multiply;
+}
+
+/* Shared “window chrome” */
+.window{
+  border: 2px solid var(--ui-border);
+  box-shadow: 0 12px 28px rgba(0,0,0,.18);
+  background:#dfeaf4;
+  overflow:hidden;
+  position:relative;
+}
+
+.titlebar{
+  height:26px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:0 8px;
+  background: var(--ui-titlebar);
+  border-bottom:1px solid rgba(0,0,0,.25);
+  font-size:12px;
+  font-weight:900;
+  color:#0b2a3d;
+  user-select:none;
+}
+
+.titlebar .dot{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:radial-gradient(#fff,#c9c9c9);
+  border:1px solid rgba(0,0,0,.25);
+}
+
+@media (max-width: 900px){
+  .header{ flex-direction:column; align-items:flex-start; }
+  .brand{ font-size: 40px; }
+}
