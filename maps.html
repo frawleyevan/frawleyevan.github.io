@@ -4,13 +4,17 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Maps — Evan Frawley</title>
-  <link rel="stylesheet" href="assets/css/site.css" />
-</head>
-<body>
-  <div class="portfolio">
 
-    <div class="header">
+  <!-- maps page styling -->
+  <link rel="stylesheet" href="assets/css/portfolio.css" />
+</head>
+
+<body>
+  <div class="page">
+
+    <header class="header">
       <div class="brand">Evan Frawley</div>
+
       <nav class="nav" aria-label="Primary navigation">
         <a href="index.html">Home</a>
         <a href="image.html">Image</a>
@@ -18,70 +22,67 @@
         <a href="writing.html">Writing</a>
         <a class="active" href="maps.html">Maps</a>
       </nav>
-    </div>
+    </header>
 
-    <div class="portfolio-grid">
+    <h1 class="section-title">Maps</h1>
+    <p class="section-subtitle">
+      Cartographic work, research visuals, and spatial storytelling. Click “View” for each project page.
+    </p>
 
-<div class="portfolio-grid">
+    <section class="grid">
 
-  <!-- Beyond Decibels -->
-  <article class="card">
-    <img class="card-media" src="https://frawleyevan9.wordpress.com/wp-content/uploads/2026/01/geog280final4.png" alt="Beyond Decibels map preview">
-    <div class="card-body">
-      <div>
-        <div class="card-title">Beyond Decibels</div>
-        <div class="card-meta">
-          Madison, Wisconsin<br>
-          Soundscape policy · GIS analysis
-        </div>
-      </div>
-      <div>
-        <div class="card-desc">
-          A soundscape-based policy framework for urban noise pollution, mapping exposure, equity, and the limits of decibel-only regulation.
-        </div>
-        <a class="card-link" href="projects/beyond-decibels.html">[View…]</a>
-      </div>
-    </div>
-  </article>
+      <!-- 1) Madison -->
+      <article class="project">
+        <img class="project-media"
+          src="https://frawleyevan9.wordpress.com/wp-content/uploads/2026/01/geog280final4.png"
+          alt="Beyond Decibels: Soundscape-based policy framework map"
+          loading="lazy" />
 
-  <!-- Cycling Safety Perceptions -->
-  <article class="card">
-    <img class="card-media" src="https://frawleyevan9.wordpress.com/wp-content/uploads/2026/01/marburg-03.jpg" alt="Cycling safety perceptions map preview">
-    <div class="card-body">
-      <div>
-        <div class="card-title">Cycling Safety Perceptions</div>
-        <div class="card-meta">
-          Marburg, Germany<br>
-          Spatial perception analysis
-        </div>
-      </div>
-      <div>
-        <div class="card-desc">
-          An analysis of perceived cycling safety, comparing mapped comfort and discomfort to underlying infrastructure patterns.
-        </div>
-        <a class="card-link" href="projects/marburg-cycling.html">[View…]</a>
-      </div>
-    </div>
-  </article>
+        <div class="project-title">Beyond Decibels: A Soundscape-Based Policy Framework</div>
 
-  <!-- River Point District -->
-  <article class="card">
-    <img class="card-media" src="https://frawleyevan9.wordpress.com/wp-content/uploads/2026/01/screenshot-2026-01-14-184127.png" alt="River Point District map preview">
-    <div class="card-body">
-      <div>
-        <div class="card-title">River Point District Proposal</div>
-        <div class="card-meta">
-          Manitowoc, Wisconsin<br>
-          Urban design + planning proposal
+        <div class="project-meta">
+          <p class="project-caption">
+            Madison, Wisconsin. Noise, equity, and urban form — translating soundscape theory into policy-ready maps.
+          </p>
+          <a class="project-link" href="projects/madison.html">View</a>
         </div>
-      </div>
-      <div>
-        <div class="card-desc">
-          A district-scale planning proposal emphasizing access, public space, and identity through cartographic and design tools.
-        </div>
-        <a class="card-link" href="projects/river-point.html">[View…]</a>
-      </div>
-    </div>
-  </article>
+      </article>
 
-</div>
+      <!-- 2) Manitowoc -->
+      <article class="project">
+        <img class="project-media"
+          src="https://frawleyevan9.wordpress.com/wp-content/uploads/2026/01/screenshot-2026-01-14-184127.png"
+          alt="River Point District project proposal map"
+          loading="lazy" />
+
+        <div class="project-title">River Point District Project Proposal</div>
+
+        <div class="project-meta">
+          <p class="project-caption">
+            Manitowoc, Wisconsin. A planning-focused proposal with diagrams and cartographic framing.
+          </p>
+          <a class="project-link" href="projects/manitowoc.html">View</a>
+        </div>
+      </article>
+
+      <!-- 3) Marburg -->
+      <article class="project">
+        <img class="project-media"
+          src="https://frawleyevan9.wordpress.com/wp-content/uploads/2026/01/marburg-03.jpg"
+          alt="Cycling Safety Perceptions in Marburg, Germany"
+          loading="lazy" />
+
+        <div class="project-title">Cycling Safety Perceptions in Marburg, Germany</div>
+
+        <div class="project-meta">
+          <p class="project-caption">
+            Spatial analysis of perceived cycling safety — clustering, infrastructure context, and design implications.
+          </p>
+          <a class="project-link" href="projects/marburg.html">View</a>
+        </div>
+      </article>
+
+    </section>
+  </div>
+</body>
+</html>
