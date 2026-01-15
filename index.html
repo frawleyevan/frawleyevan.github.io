@@ -5,10 +5,21 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Evan Frawley</title>
 
-  <!-- Site styles -->
+  <!-- ===============================
+       Fonts + Shared UI system
+       =============================== -->
+  <link rel="stylesheet" href="assets/css/fonts.css" />
+  <link rel="stylesheet" href="assets/css/ui.css" />
+
+  <!-- ===============================
+       Home-specific overrides ONLY
+       (no global font resets here)
+       =============================== -->
   <link rel="stylesheet" href="assets/css/site.css" />
 
-  <!-- Leaflet (CDN) -->
+  <!-- ===============================
+       Leaflet CSS
+       =============================== -->
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -16,12 +27,13 @@
     crossorigin=""
   />
 
+  <!-- ===============================
+       Home-only inline tweaks
+       (safe because they are LOCAL)
+       =============================== -->
   <style>
-    /* Home-specific tweaks */
-
     .page { padding-top: 18px; }
 
-    /* More space between header and content */
     .header { margin-bottom: 28px; }
 
     .sidecard{
@@ -41,46 +53,34 @@
       font-size: 14px;
       line-height: 1.55;
       color: rgba(0,0,0,.85);
+      font-family: var(--type-body);
     }
 
     .bio b{
       font-size: 18px;
+      font-weight: 800;
       color: #000;
     }
 
     .coords-block{
       margin-top: 26px;
       font-size: 13px;
+      font-family: var(--type-body);
     }
 
     .coords-label{
-      font-weight: 900;
+      font-weight: 800;
     }
 
-    /* Layout */
+    /* Layout tweak specific to homepage */
     .grid{
       grid-template-columns: 1fr 320px;
     }
 
-    /* Make map taller + prevent collapse */
+    /* Make map slightly taller on home */
     .map-window{
-      aspect-ratio: 4 / 3;
-      border-width: 3px;
       min-height: 560px;
-    }
-
-    /* Optional: subtle pixel/noise overlay across the whole page */
-    body::before{
-      content:"";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: .06;
-      background:
-        linear-gradient(rgba(0,0,0,.10) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,0,0,.10) 1px, transparent 1px);
-      background-size: 3px 3px;
-      mix-blend-mode: multiply;
+      border-width: 3px;
     }
   </style>
 </head>
@@ -88,8 +88,10 @@
 <body>
   <div class="page">
 
-    <!-- Header -->
-    <div class="header">
+    <!-- ===============================
+         Header
+         =============================== -->
+    <header class="header">
       <div class="brand">Evan Frawley</div>
 
       <nav class="nav" aria-label="Primary navigation">
@@ -99,15 +101,17 @@
         <a href="writing.html">Writing</a>
         <a href="maps.html">Maps</a>
       </nav>
-    </div>
+    </header>
 
-    <!-- Main grid -->
+    <!-- ===============================
+         Main layout
+         =============================== -->
     <div class="grid">
 
-      <!-- Left: the map "window" gets injected by map.js into #map-window -->
+      <!-- Map container (map.js injects UI + Leaflet here) -->
       <div id="map-window"></div>
 
-      <!-- Right: bio + coordinates -->
+      <!-- Bio sidebar -->
       <aside class="sidecard">
         <img
           class="bio-pic"
@@ -132,14 +136,18 @@
     </div>
   </div>
 
-  <!-- Leaflet JS (CDN) - only load ONCE -->
+  <!-- ===============================
+       Leaflet JS
+       =============================== -->
   <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin=""
   ></script>
 
-  <!-- Your data + map code (order matters) -->
+  <!-- ===============================
+       Data + Map logic
+       =============================== -->
   <script src="assets/js/projects.js"></script>
   <script src="assets/js/map.js"></script>
 </body>
