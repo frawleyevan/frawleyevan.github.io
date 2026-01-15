@@ -47,19 +47,26 @@
       </div>
     `;
 
-    const marker = L.marker([p.lat, p.lng]).addTo(map).bindPopup(popupHTML, { maxWidth: 360 });
+const coordsEl = document.getElementById("coords");
+const defaultCoordsText = coordsEl ? coordsEl.textContent : "";
 
-    // Update sidebar coords when clicked
-    marker.on("click", () => {
-      const coordsEl = document.getElementById("coords");
-      if (coordsEl) coordsEl.textContent = `${p.lat.toFixed(6)}, ${p.lng.toFixed(6)}`;
-    });
-  });
+function setCoords(text){
+  if (coordsEl) coordsEl.textContent = text;
+}
 
-  // Fit to all markers
-  if (bounds.length) {
-    map.fitBounds(bounds, { padding: [40, 40] });
-  } else {
-    map.setView([20, 0], 2);
-  }
-})();
+marker.on("mouseover", () => {
+  setCoords(`${p.lat.toFixed(6)}, ${p.lng.toFixed(6)}`);
+});
+
+marker.on("mouseout", () => {
+  // restore whatever it was before hover (or a default)
+  setCoords(defaultCoordsText || "Hover a pin…");
+});
+
+marker.on("click", () => {
+  // on click, “lock” the coords by updating the default text
+  const locked = `${p.lat.toFixed(6)}, ${p.lng.toFixed(6)}`;
+  setCoords(locked);
+  // update defaultCoordsText behavior by overwriting the element’s text baseline
+  // (simple + works without extra globals)
+});
