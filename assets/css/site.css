@@ -116,3 +116,89 @@ html, body{
   position:absolute;
   inset:26px 0 0 0;
 }
+
+/* --- Cargo-style portfolio grids --- */
+.portfolio{
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 18px 18px 40px;
+}
+
+.portfolio-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  align-items:start;
+}
+
+@media (max-width: 980px){
+  .portfolio-grid{ grid-template-columns: 1fr; }
+}
+
+.card{
+  border: 2px solid rgba(0,0,0,.18);
+  background: #fff;
+  overflow:hidden;
+}
+
+.card-media{
+  width:100%;
+  display:block;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  background:#eee;
+}
+
+.card-body{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  padding: 14px 16px 18px;
+}
+
+.card-title{
+  font-weight: 900;
+  font-size: 14px;
+  margin: 0 0 8px 0;
+}
+
+.card-meta{
+  font-size: 12px;
+  line-height: 1.35;
+  color: rgba(0,0,0,.75);
+}
+
+.card-desc{
+  font-size: 12px;
+  line-height: 1.55;
+  color: rgba(0,0,0,.78);
+}
+
+.card-link{
+  display:inline-block;
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  color: #000;
+  border-bottom: 1px solid rgba(0,0,0,.45);
+}
+
+.card-link:hover{
+  border-bottom-color: #000;
+}
+
+/* Optional: subtle pixel/noise overlay within cards */
+.card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.06;
+  background:
+    linear-gradient(rgba(0,0,0,.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,.12) 1px, transparent 1px);
+  background-size: 3px 3px;
+  mix-blend-mode: multiply;
+}
+.card{ position:relative; }
